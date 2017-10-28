@@ -1,5 +1,5 @@
 const electron = require('electron');
-const { ipcRenderer, remote } = electron;
+const { ipcRenderer, remote, shell } = electron;
 const marked = require('marked');
 const mainProcess = remote.require('./index.js');
 const clipboard = remote.clipboard;
@@ -39,4 +39,11 @@ copyHtml.addEventListener('click', () => {
 saveFile.addEventListener('click', () => {
   const md = rawMarkdown.value;
   mainProcess.saveFile(md);
+});
+
+document.body.addEventListener('click', e => {
+  if (e.target.matches('a[href^="http"]')) {
+    e.preventDefault();
+    shell.openExternal(e.target.href);
+  }
 });
