@@ -1,11 +1,13 @@
 const electron = require('electron');
-const { ipcRenderer } = electron;
+const { ipcRenderer, remote } = electron;
 const marked = require('marked');
+const mainProcess = remote.require('./index.js');
 
 const $ = selector => document.querySelector(selector);
 
 const rawMarkdown = $('.raw-markdown');
 const renderedHtml = $('.rendered-html');
+const openFile = $('#open-file');
 
 ipcRenderer.on('file-opened', (event, file, content) => {
   rawMarkdown.value = content;
@@ -20,4 +22,8 @@ function renderMarkdownToHtml(markdown) {
 rawMarkdown.addEventListener('keyup', e => {
   const content = e.target.value;
   renderMarkdownToHtml(content);
+});
+
+openFile.addEventListener('click', () => {
+  mainProcess.openFile();
 });

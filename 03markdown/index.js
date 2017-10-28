@@ -13,9 +13,9 @@ app.on('ready', () => {
   mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'));
   require('devtron').install();
 
-  mainWindow.webContents.on('did-finish-load', () => {
-    openFile();
-  });
+  //   mainWindow.webContents.on('did-finish-load', () => {
+  //     openFile();
+  //   });
 });
 
 function openFile() {
@@ -39,3 +39,5 @@ function openFile() {
   //console.log(content);
   mainWindow.webContents.send('file-opened', file, content);
 }
+
+exports.openFile = openFile;
