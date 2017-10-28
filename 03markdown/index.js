@@ -20,12 +20,22 @@ app.on('ready', () => {
 
 function openFile() {
   const files = dialog.showOpenDialog(mainWindow, {
-    properties: ['openfile']
+    properties: ['openfile'],
+    filters: [
+      {
+        name: 'Markdown files',
+        extensions: ['md', 'txt']
+      }
+    ],
+    title: 'kick it',
+    buttonLabel: 'kick it'
   });
+
   if (!files) return;
 
   const file = files[0];
   const content = fs.readFileSync(file).toString();
 
-  console.log(content);
+  //console.log(content);
+  mainWindow.webContents.send('file-opened', file, content);
 }
