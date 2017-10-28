@@ -16,3 +16,8 @@ function renderMarkdownToHtml(markdown) {
   const html = marked(markdown);
   renderedHtml.innerHTML = html;
 }
+
+rawMarkdown.addEventListener('keyup', e => {
+  const content = e.target.value;
+  renderMarkdownToHtml(content);
+});
